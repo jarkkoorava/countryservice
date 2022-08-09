@@ -1,19 +1,16 @@
 package com.example.countryservice.service;
 
+import com.example.countryservice.model.Country;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class FetchCountryService {
 
-    private static Object allCountries = null;
+    private static Map<String, Country> countryMap = new HashMap<>();
 
     public FetchCountryService() throws Exception {
         initData();
@@ -22,11 +19,32 @@ public class FetchCountryService {
     public void initData() throws Exception {
         ObjectMapper jsonMapper = new ObjectMapper();
         URI jsonUrl = new URI("https://restcountries.com/v3.1/all");
-        allCountries = jsonMapper.readValue(jsonUrl.toURL(), ArrayList.class);
+        ArrayList list = jsonMapper.readValue(jsonUrl.toURL(), ArrayList.class);
+        for (Object listNode : list) {
+
+            Map listNodeAsMap = (Map) listNode;
+
+            Map nodeNameMap = (Map) listNodeAsMap.get("name");
+            String common = (String) nodeNameMap.get("common");
+
+            String code = (String) listNodeAsMap.get("cca2");
+
+            //Map nodeCapitalMap = (Map) listNodeAsMap.get("capital");
+            //String capital = (String) nodeCapitalMap.get(0);
+
+            Map nodeFlagMap = (Map) listNodeAsMap.get("flags");
+            String flag_file_url = (String) nodeFlagMap.get("svg");
+
+            Integer population = (Integer) listNodeAsMap.get("population");
+
+            Country country = new Country(common, code, "capital", flag_file_url, population);
+            this.countryMap.put(common, country);
+        }
+
     }
 
     public static Object getAllCountries() {
-        return allCountries;
+        return countryMap;
     }
 
 }
