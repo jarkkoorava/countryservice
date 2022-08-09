@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FetchCountryService {
@@ -45,6 +46,13 @@ public class FetchCountryService {
 
     public static Object getAllCountries() {
         return countryMap;
+    }
+
+    public static Object getSingleCountry(String name) {
+        Object singleCountry = countryMap.entrySet().stream()
+                .filter(map -> Objects.equals(map.getKey(), name))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return singleCountry;
     }
 
 }
