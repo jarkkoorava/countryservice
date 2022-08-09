@@ -15,9 +15,10 @@ public class CountryController {
 
     @GetMapping("/countries/")
     public Object getAllCountries() {
-        System.out.println("Data containing all countries:");
-        System.out.println(FetchCountryService.getAllCountries());
-        return (FetchCountryService.getAllCountries());
+        // System.out.println("Data containing all countries:");
+        System.out.println("Data type is:" + FetchCountryService.getAllCountries().getClass());
+        // System.out.println(FetchCountryService.getAllCountries());
+        return FetchCountryService.getAllCountries();
     }
 
 }
