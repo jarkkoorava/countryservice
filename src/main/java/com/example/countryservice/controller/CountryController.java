@@ -1,34 +1,30 @@
 package com.example.countryservice.controller;
 
 import com.example.countryservice.service.FetchCountryService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.io.IOException;
 
 @RestController
-@RequestMapping
 public class CountryController {
 
     @Autowired
     private FetchCountryService fetchCountryService;
 
     @GetMapping("/countries")
-    public Object getAllCountries() {
-        // System.out.println("Data containing all countries:");
-        System.out.println("Data type is:" + FetchCountryService.getAllCountries().getClass());
-        // System.out.println(FetchCountryService.getAllCountries());
-        return FetchCountryService.getAllCountries();
+    public Object getAllCountries() throws IOException {
+        System.out.println("Data type for all countries is: " + this.fetchCountryService.getAllCountries().getClass());
+        return this.fetchCountryService.getAllCountries();
     }
 
     @GetMapping("/countries/{name}")
     public Object getSingleCountry(@PathVariable("name") String name) {
-        return FetchCountryService.getSingleCountry(name);
+        System.out.println("Data type for single country is: " + this.fetchCountryService.getSingleCountry(name).getClass());
+        return this.fetchCountryService.getSingleCountry(name);
+
     }
 
 }
