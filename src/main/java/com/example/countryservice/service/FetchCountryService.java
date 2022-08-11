@@ -1,6 +1,7 @@
 package com.example.countryservice.service;
 
 import com.example.countryservice.model.Country;
+import com.example.countryservice.model.FilteredCountry;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class FetchCountryService {
 
-    private static Map<String, Country> countryMap = new HashMap<>();
+    private Map<String, Country> countryMap = new HashMap<>();
 
     public FetchCountryService() throws Exception {
         initData();
@@ -30,29 +31,33 @@ public class FetchCountryService {
 
             String code = (String) listNodeAsMap.get("cca2");
 
-            //Map nodeCapitalMap = (Map) listNodeAsMap.get("capital");
-            //String capital = (String) nodeCapitalMap.get(0);
+            ArrayList nodeCapitalMap = (ArrayList) listNodeAsMap.get("capital");
+            String capital = "";
+            if (nodeCapitalMap != null ) {
+                capital = (String) nodeCapitalMap.get(0);
+            }
 
             Map nodeFlagMap = (Map) listNodeAsMap.get("flags");
             String flag_file_url = (String) nodeFlagMap.get("svg");
 
             Integer population = (Integer) listNodeAsMap.get("population");
 
-            Country country = new Country(common, code, "capital", flag_file_url, population);
-            this.countryMap.put(common, country);
+            Country country = new Country(common, code, capital, flag_file_url, population);
+            this.countryMap.put(common.toLowerCase(), country);
         }
-
     }
 
-    public static Object getAllCountries() {
-        return countryMap;
+    public Object getAllCountries() {
+        List<FilteredCountry> filteredCountries = new ArrayList<>();
+        for (Country country : this.countryMap.values()) {
+            FilteredCountry filteredCountry = new FilteredCountry(country.getName(), country.getCountry_code());
+            filteredCountries.add(filteredCountry);
+        }
+        return filteredCountries;
     }
 
-    public static Object getSingleCountry(String name) {
-        Object singleCountry = countryMap.entrySet().stream()
-                .filter(map -> Objects.equals(map.getKey(), name))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return singleCountry;
+    public Object getSingleCountry(String name) {
+        Object country = countryMap.get(name.toLowerCase());
+        return country;
     }
-
 }
