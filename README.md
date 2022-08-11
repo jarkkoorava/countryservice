@@ -12,14 +12,14 @@ This program creates a simple REST api that exposes two endpoints to get country
 First, clone this repository. Then in the 'countryservice' directory, use this command to run:
 
 ```
-./mwnw spring-boot::run
+./mvnw spring-boot::run
 ```
 
 You can then access the API at localhost with a REST client or web browser at http://127.0.0.1:8080/
 
 ## Available endpoints
 
-# GET /countries/
+### GET /countries/
 
 Will return country data like so: 
 
@@ -35,11 +35,11 @@ Will return country data like so:
             "country_code": "JP"
         },
         ...
-    }
+    ]
 }
 ```
 
-# GET /countries/{name}
+### GET /countries/{name}
 
 Will return single country data like so: 
 
