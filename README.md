@@ -1,6 +1,7 @@
 # Countryservice
 
-This program creates a simple REST api that exposes two endpoints to get country data.
+This program creates a simple REST api that exposes two endpoints to get country data. The program first fetches the 
+data from [https://restcountries.com/](https://restcountries.com/v3.1/all), parses it and then serves it trough REST API.
 
 ## Prerequisites
 
