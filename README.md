@@ -9,9 +9,11 @@ This program creates a simple REST api that exposes two endpoints to get country
 
 ## Installing and running
 
-First, clone this repository. In the 'countryservice' directory, use this command to run:
+First, clone this repository. Then in the 'countryservice' directory, use this command to run:
 
-> ./mwnw spring-boot::run
+```
+./mwnw spring-boot::run
+```
 
 You can then access the API at localhost with a REST client or web browser at http://127.0.0.1:8080/
 
@@ -21,7 +23,7 @@ You can then access the API at localhost with a REST client or web browser at ht
 
 Will return country data like so: 
 
-``
+```
 {
     "countries": [
         {
@@ -35,12 +37,13 @@ Will return country data like so:
         ...
     }
 }
-``
+```
+
 # GET /countries/{name}
 
 Will return single country data like so: 
 
-``
+```
 {
     "name": "Finland",
     "country_code": "FI",
@@ -48,4 +51,4 @@ Will return single country data like so:
     "flag_file_url": "https://flagcdn.com/fi.svg",
     "population": 5530719
 }
-``
+```
