@@ -1,5 +1,6 @@
 package com.example.countryservice.service;
 
+import com.example.countryservice.model.CountriesResponse;
 import com.example.countryservice.model.Country;
 import com.example.countryservice.model.FilteredCountry;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,12 +49,13 @@ public class FetchCountryService {
     }
 
     public Object getAllCountries() {
-        List<FilteredCountry> filteredCountries = new ArrayList<>();
+        CountriesResponse response = new CountriesResponse();
+        List<FilteredCountry> filteredCountries = response.getCountries();
         for (Country country : this.countryMap.values()) {
             FilteredCountry filteredCountry = new FilteredCountry(country.getName(), country.getCountry_code());
             filteredCountries.add(filteredCountry);
         }
-        return filteredCountries;
+        return response;
     }
 
     public Object getSingleCountry(String name) {
